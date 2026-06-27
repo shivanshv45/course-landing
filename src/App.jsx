@@ -38,9 +38,84 @@ const compRows = [
   ['Freelancing Training', '✕', '✓'],
   ['Networking Sessions', '✕', '✓'],
   ['1-on-1 Coaching', '✕', '✓'],
+];
+
+const reqRows = [
+  ['Eligibility', 'Any law student', 'Graduates & Final Year'],
+  ['Time Required', '3-4 hrs / week', '7-8 hrs / week'],
+  ['Intensity', 'Beginner Friendly', 'Rigorous & Demanding'],
+  ['Prerequisites', 'None', 'Basic Contract Law'],
+  ['Tools Needed', 'MS Word & Internet', 'MS Word & Internet'],
 ]
 
 function App() {
+  const [dossierTab, setDossierTab] = useState('overview');
+  const [nextTab, setNextTab] = useState(null);
+  const [isFlipping, setIsFlipping] = useState(false);
+  const [flipDirection, setFlipDirection] = useState('rtl');
+  const [selectedGoals, setSelectedGoals] = useState([]);
+
+  const toggleGoal = (goalIndex) => {
+    setSelectedGoals(prev => 
+      prev.includes(goalIndex)
+        ? prev.filter(g => g !== goalIndex)
+        : [...prev, goalIndex]
+    );
+  };
+
+  const handleTabChange = (tab) => {
+    if (tab === dossierTab || isFlipping) return;
+
+    const dir = tab === 'requirements' ? 'rtl' : 'ltr';
+    setFlipDirection(dir);
+    setNextTab(tab);
+    setIsFlipping(true);
+
+    setTimeout(() => {
+      setDossierTab(tab);
+      setIsFlipping(false);
+      setNextTab(null);
+    }, 800);
+  }
+
+  const renderLeftPage = (tab) => (
+    <div className="dossier-page left-page">
+      <div className="dossier-header">
+        <h3>2-Month Basic</h3>
+        <div className="dossier-badge">Fundamentals</div>
+      </div>
+      <div className="dossier-list-wrap">
+        <ul className="dossier-list">
+          {(tab === 'overview' ? compRows : reqRows).map(([label, a, b], i) => (
+            <li key={`basic-${tab}-${i}`}>
+              <span className="dossier-label">{label}</span>
+              <span className="dossier-value">{a === '✓' ? 'Included' : a === '✕' ? '—' : a}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+
+  const renderRightPage = (tab) => (
+    <div className="dossier-page right-page">
+      <div className="dossier-header highlight">
+        <h3>6-Month Expert</h3>
+        <div className="dossier-badge">Mastery</div>
+      </div>
+      <div className="dossier-list-wrap">
+        <ul className="dossier-list">
+          {(tab === 'overview' ? compRows : reqRows).map(([label, a, b], i) => (
+            <li key={`expert-${tab}-${i}`}>
+              <span className="dossier-label">{label}</span>
+              <span className="dossier-value highlight-val">{b === '✓' ? 'Included' : b === '✕' ? '—' : b}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  );
+
   const carouselRef = useRef(null)
 
   const sectionRef = useRef(null);
@@ -49,25 +124,25 @@ function App() {
   useEffect(() => {
     const handleScroll = () => {
       if (!sectionRef.current || !trackRef.current) return;
-      
+
       const section = sectionRef.current;
       const track = trackRef.current;
-      
+
       const rect = section.getBoundingClientRect();
       const sectionTop = window.scrollY + rect.top;
       const sectionHeight = section.offsetHeight;
       const windowHeight = window.innerHeight;
-      
+
       // If we haven't reached the section, track is at 0
       if (window.scrollY < sectionTop) {
         track.style.transform = `translateX(0px)`;
         return;
       }
-      
+
       // Calculate how far down the 400vh section we have scrolled
       let progress = (window.scrollY - sectionTop) / (sectionHeight - windowHeight);
       progress = Math.max(0, Math.min(1, progress));
-      
+
       const maxScroll = track.scrollWidth - window.innerWidth;
       track.style.transform = `translateX(-${progress * maxScroll}px)`;
     };
@@ -82,13 +157,9 @@ function App() {
     };
   }, []);
 
+
   return (
     <div className="app-wrapper">
-      {/* Top Banner */}
-      <div className="top-banner">
-        <span className="green-text">We noticed you're in India 🇮🇳</span> &nbsp; Good news! You're eligible for regional pricing. 
-        <a href="#pricing">See pricing ▸</a>
-      </div>
 
       {/* Topbar */}
       <div className="topbar">
@@ -103,7 +174,7 @@ function App() {
             <a href="#faculty">Faculty</a>
             <a href="#pricing">Pricing</a>
           </div>
-          <a href={ENROLL_URL} className="btn-enroll">Join Course</a>
+          <a href={ENROLL_URL} target="_blank" rel="noopener noreferrer" className="btn-enroll">Join Course</a>
         </div>
       </div>
 
@@ -111,13 +182,14 @@ function App() {
       <section className="hero">
         {/* Background Video */}
         <div className="hero-bg-video">
-          {/* Using a reliable placeholder video. Replace 'LXb3EKWsInQ' with your Lawctopus Video ID */}
-          <iframe 
-            src="https://www.youtube.com/embed/LXb3EKWsInQ?autoplay=1&mute=1&loop=1&playlist=LXb3EKWsInQ&controls=0&showinfo=0&rel=0&modestbranding=1" 
-            frameBorder="0" 
-            allow="autoplay; fullscreen; picture-in-picture" 
-            allowFullScreen 
-          ></iframe>
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            src="/video.mp4"
+          />
         </div>
         <div className="hero-gradient-overlay"></div>
 
@@ -127,25 +199,51 @@ function App() {
             <p className="hero-desc">
               Learn to draft real-world contracts and build a freelance career. Use expert techniques to master 24 complex agreements and secure high-paying clients.
             </p>
-            
+
             <div className="course-card-mini">
               <div className="course-card-img">
-                {/* Legal Document Icon matching style */}
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>
+
+                {/* Background Contract */}
+                <div className="wireframe-contract wf-bg">
+                  <div className="wf-line" style={{ width: '100%' }}></div>
+                  <div className="wf-line" style={{ width: '80%' }}></div>
+                  <div className="wf-line" style={{ width: '90%' }}></div>
+                  <div className="wf-space"></div>
+                  <div className="wf-line" style={{ width: '100%' }}></div>
+                  <div className="wf-line" style={{ width: '60%' }}></div>
+                </div>
+
+                {/* Foreground Contract */}
+                <div className="wireframe-contract">
+                  <div className="wf-header">CONFIDENTIAL</div>
+                  <div className="wf-title">COMMERCIAL AGREEMENT</div>
+                  <div className="wf-line" style={{ width: '100%' }}></div>
+                  <div className="wf-line" style={{ width: '85%' }}></div>
+                  <div className="wf-line" style={{ width: '90%' }}></div>
+                  <div className="wf-space"></div>
+                  <div className="wf-clause"><span>§ 1</span><div className="wf-line" style={{ width: '60%' }}></div></div>
+                  <div className="wf-clause"><span>§ 2</span><div className="wf-line" style={{ width: '75%' }}></div></div>
+                  <div className="wf-clause"><span>§ 3</span><div className="wf-line" style={{ width: '50%' }}></div></div>
+                  <div className="wf-signature">
+                    <div className="wf-sig-line"></div>
+                    <div className="wf-sig-line"></div>
+                  </div>
+                </div>
+
               </div>
               <div className="course-card-title">
-                COMPLETE INTRO <span>V1</span>
+                COMPLETE INTRO <span className="version">V1</span>
               </div>
             </div>
 
             <div className="hero-actions">
-              <a href={ENROLL_URL} className="btn-solid-red">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              <a href={ENROLL_URL} target="_blank" rel="noopener noreferrer" className="btn-solid-red">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
                 Watch Course
               </a>
-              <a href="#curriculum" className="btn-outline-grey">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                Course Preview
+              <a href="https://www.youtube.com/watch?v=CfiCtSm0Km0&pp=ygUobWFzdGVyaW5nIGNvbW1lcmljYWwgY29udHJhY3RzIGxhd2N0b3B1c9IHCQlBCwGHKiGM7w%3D%3D" target="_blank" rel="noopener noreferrer" className="btn-outline-grey">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+                Watch Trailer
               </a>
             </div>
           </div>
@@ -172,9 +270,9 @@ function App() {
       {/* MasterClass Feature (About) */}
       <section id="about" className="masterclass-feature">
         <div className="mc-header">
-          <h2>Meet the world's best.<br/>Learn the art of contract drafting.</h2>
+          <h2>Meet the world's best.<br />Learn the art of contract drafting.</h2>
         </div>
-        
+
         <div className="mc-card">
           <div className="mc-image">
             <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=1200&q=80" alt="Featured Instructor" />
@@ -182,13 +280,19 @@ function App() {
           <div className="mc-content-overlay">
             <div className="mc-content-right">
               <div className="mc-badge">New Class</div>
-              <h3 className="mc-serif-title">Mastering<br/>Commercial Contracts</h3>
+              <h3 className="mc-serif-title">Mastering<br />Commercial Contracts</h3>
               <div className="mc-divider"></div>
               <p className="mc-subtitle">Learn high-stakes drafting and negotiation from top industry experts.</p>
-              <a href="#curriculum" className="mc-btn">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              <div className="hero-actions">
+              <a href={ENROLL_URL} target="_blank" rel="noopener noreferrer" className="btn-solid-red">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+                Watch Course
+              </a>
+              <a href="https://www.youtube.com/watch?v=CfiCtSm0Km0&pp=ygUobWFzdGVyaW5nIGNvbW1lcmljYWwgY29udHJhY3RzIGxhd2N0b3B1c9IHCQlBCwGHKiGM7w%3D%3D" target="_blank" rel="noopener noreferrer" className="btn-outline-grey">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
                 Watch Trailer
               </a>
+            </div>
             </div>
           </div>
         </div>
@@ -205,7 +309,7 @@ function App() {
               <div className="brand-header">Lawctopus <span>at Work</span></div>
               <h2 className="breakout-title">MASTER YOUR DRAFTING</h2>
               <p className="breakout-desc">See why hundreds of law students and professionals rely on Lawctopus for highly practical, hands-on training and career development.</p>
-              
+
               <div className="breakout-actions">
                 <a href={ENROLL_URL} className="btn-solid-red">Enroll Now</a>
                 <a href="#curriculum" className="btn-text-link">Learn More &rarr;</a>
@@ -224,50 +328,50 @@ function App() {
           </div>
 
           <div className="curriculum-horizontal-track" ref={trackRef}>
-          {months.map((m, i) => (
-            <div className="curriculum-slide" key={i}>
-              <div className="slide-inner">
-                
-                <div className="slide-image">
-                  <img src={m.img} alt={m.title} />
-                  {i === months.length - 1 && (
-                    <div className="cert-badge">
-                      <svg viewBox="0 0 100 100" width="120" height="120"><circle cx="50" cy="50" r="45" fill="none" stroke="#f39c12" strokeWidth="2" strokeDasharray="6 4" /><path id="curve" d="M 15 50 a 35 35 0 1 1 70 0 a 35 35 0 1 1 -70 0" fill="none" /><text fontSize="9.5" fill="#f39c12" letterSpacing="2"><textPath href="#curve" startOffset="0%">★ CERTIFICATE OF COMPLETION ★</textPath></text></svg>
-                    </div>
-                  )}
-                </div>
-                
-                <div className="slide-content">
-                  <div className="slide-label">Module {m.n}</div>
-                  <h3 className="slide-title">{m.title}</h3>
-                  <div className="slide-list">
-                    {m.topics.map((topic, j) => (
-                      <div className="slide-list-item" key={j}>
-                        <div className="slide-list-icon">
-                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            {months.map((m, i) => (
+              <div className="curriculum-slide" key={i}>
+                <div className="slide-inner">
+
+                  <div className="slide-image">
+                    <img src={m.img} alt={m.title} />
+                    {i === months.length - 1 && (
+                      <div className="cert-badge">
+                        <svg viewBox="0 0 100 100" width="120" height="120"><circle cx="50" cy="50" r="45" fill="none" stroke="#f39c12" strokeWidth="2" strokeDasharray="6 4" /><path id="curve" d="M 15 50 a 35 35 0 1 1 70 0 a 35 35 0 1 1 -70 0" fill="none" /><text fontSize="9.5" fill="#f39c12" letterSpacing="2"><textPath href="#curve" startOffset="0%">★ CERTIFICATE OF COMPLETION ★</textPath></text></svg>
+                      </div>
+                    )}
+                  </div>
+
+                  <div className="slide-content">
+                    <div className="slide-label">Module {m.n}</div>
+                    <h3 className="slide-title">{m.title}</h3>
+                    <div className="slide-list">
+                      {m.topics.map((topic, j) => (
+                        <div className="slide-list-item" key={j}>
+                          <div className="slide-list-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                          </div>
+                          <div className="slide-list-text">{topic}</div>
                         </div>
-                        <div className="slide-list-text">{topic}</div>
+                      ))}
+
+                      <div className="slide-list-item" style={{ marginTop: '16px' }}>
+                        <div className="slide-list-icon">
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                        </div>
+                        <div className="slide-list-text"><strong>{m.live} hours</strong> live instruction</div>
                       </div>
-                    ))}
-                    
-                    <div className="slide-list-item" style={{marginTop: '16px'}}>
-                      <div className="slide-list-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                      <div className="slide-list-item">
+                        <div className="slide-list-icon">
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        </div>
+                        <div className="slide-list-text"><strong>{m.rec} hours</strong> on-demand</div>
                       </div>
-                      <div className="slide-list-text"><strong>{m.live} hours</strong> live instruction</div>
-                    </div>
-                    <div className="slide-list-item">
-                      <div className="slide-list-icon">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                      </div>
-                      <div className="slide-list-text"><strong>{m.rec} hours</strong> on-demand</div>
                     </div>
                   </div>
+
                 </div>
-                
               </div>
-            </div>
-          ))}
+            ))}
           </div>
         </div>
       </section>
@@ -278,19 +382,39 @@ function App() {
           <div className="faculty-split">
             {/* Left Side - Typography & Checklist */}
             <div className="faculty-left">
-              <h2 className="mc-headline">LEARN FROM THE BEST,<br/>BE YOUR BEST.</h2>
+              <h2 className="mc-headline">LEARN FROM THE BEST,<br />BE YOUR BEST.</h2>
               <p className="mc-subline">Get unlimited access to practical drafting skills and expert feedback.</p>
               <div className="mc-dash"></div>
-              
+
               <div className="mc-question">What brings you to Lawctopus today?</div>
-              
+
               <div className="mc-checklist">
-                <div className="mc-check-item"><div className="mc-check-box"></div> Master contract drafting & negotiation</div>
-                <div className="mc-check-item"><div className="mc-check-box"></div> Build a freelance career on Upwork</div>
-                <div className="mc-check-item"><div className="mc-check-box"></div> Draft complex SaaS & Tech agreements</div>
-                <div className="mc-check-item"><div className="mc-check-box"></div> Understand International Contracts</div>
-                <div className="mc-check-item"><div className="mc-check-box"></div> Get 1-on-1 feedback on my drafts</div>
+                {[
+                  "Master contract drafting & negotiation",
+                  "Build a freelance career on Upwork",
+                  "Draft complex SaaS & Tech agreements",
+                  "Understand International Contracts",
+                  "Get 1-on-1 feedback on my drafts"
+                ].map((goal, idx) => (
+                  <div 
+                    key={idx} 
+                    className={`mc-check-item ${selectedGoals.includes(idx) ? 'selected' : ''}`}
+                    onClick={() => toggleGoal(idx)}
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <div className="mc-check-box"></div> 
+                    {goal}
+                  </div>
+                ))}
               </div>
+
+              {selectedGoals.length > 0 && (
+                <div style={{ marginTop: '24px', animation: 'fadeIn 0.3s ease' }}>
+                  <a href="#pricing" className="btn-solid-red" style={{ display: 'inline-flex', padding: '12px 24px' }}>
+                    Start Learning Today
+                  </a>
+                </div>
+              )}
             </div>
 
             {/* Right Side - Masonry Scrolling Marquee */}
@@ -345,7 +469,7 @@ function App() {
           <div className="ai-left-content">
             <h2 className="ai-massive-title">AI IN LAW</h2>
             <p className="ai-left-desc">
-              AI is no longer optional.<br/>
+              AI is no longer optional.<br />
               It is a core professional skill.
             </p>
           </div>
@@ -369,7 +493,7 @@ function App() {
                   <li><span>Drafting & Analysis</span><span className="ai-meta">Core</span></li>
                 </ul>
 
-                <h4 className="ai-list-title" style={{marginTop: '40px'}}>Included Tools</h4>
+                <h4 className="ai-list-title" style={{ marginTop: '40px' }}>Included Tools</h4>
                 <ul className="ai-clean-list">
                   <li><span>IK Prism Access</span><span className="ai-meta">1 Month</span></li>
                   <li><span>AI Prompts eBook</span><span className="ai-meta">31 pgs</span></li>
@@ -385,8 +509,8 @@ function App() {
                   <li><span>Contract Drafting</span><span className="ai-meta">Rec</span></li>
                   <li><span>Technology & Ethics</span><span className="ai-meta">Rec</span></li>
                 </ul>
-                
-                <h4 className="ai-list-title" style={{marginTop: '40px'}}>Support</h4>
+
+                <h4 className="ai-list-title" style={{ marginTop: '40px' }}>Support</h4>
                 <ul className="ai-clean-list">
                   <li><span>Mentor Insights</span><span className="ai-meta">Ongoing</span></li>
                   <li><span>Q&A Forums</span><span className="ai-meta">24/7</span></li>
@@ -402,16 +526,16 @@ function App() {
         <div className="wrap">
           <h2 className="section-title">Choose Your Path</h2>
           <p className="section-subtitle">Lawctopus Law School offers specialized tracks for contract drafting.</p>
-          
+
           <div className="pricing-cards-stacked">
-            
+
             {/* Left Card: Basic */}
             <div className="price-card tier-left">
               <h3>2-Month Basic</h3>
               <div className="duration">Fundamentals</div>
               <div className="price-original" style={{ opacity: 0 }}>₹0</div>
               <div className="price-current">₹7,999</div>
-              
+
               <ul className="feat-list">
                 <li>8 Live Classes</li>
                 <li>2 Assignments</li>
@@ -428,12 +552,12 @@ function App() {
                 3,000+ enrolled
               </div>
 
-              <div className="mc-badge" style={{margin: '0 auto 16px', display: 'inline-block'}}>Most Popular</div>
+              <div className="mc-badge" style={{ margin: '0 auto 16px', display: 'inline-block' }}>Most Popular</div>
               <h3>6-Month Expert</h3>
               <div className="duration">Mastering Drafting & Freelancing</div>
               <div className="price-original">₹60,000</div>
               <div className="price-current">₹24,999 <span>/ full</span></div>
-              
+
               <ul className="feat-list">
                 <li>55 Live Classes</li>
                 <li>17 Assignments + Feedback</li>
@@ -449,7 +573,7 @@ function App() {
               <div className="duration">Advanced Modules</div>
               <div className="price-original">₹25,000</div>
               <div className="price-current">₹15,999</div>
-              
+
               <ul className="feat-list">
                 <li>24 Live Classes</li>
                 <li>8 Assignments</li>
@@ -463,45 +587,111 @@ function App() {
         </div>
       </section>
 
-      {/* Detailed Comparison Table */}
+      {/* Dossier Book Comparison */}
       <section id="comparison" className="section">
         <div className="wrap">
-          <h2 className="section-title left">Feature Comparison</h2>
-          <div className="comparison-wrap">
-            <table className="comparison-table">
-              <thead>
-                <tr>
-                  <th>Features</th>
-                  <th>2-Month Course</th>
-                  <th>6-Month Expert Course</th>
-                </tr>
-              </thead>
-              <tbody>
-                {compRows.map(([label, a, b], i) => (
-                  <tr key={i}>
-                    <td>{label}</td>
-                    <td>{a === '✓' ? <span className="yes-mark">✓</span> : a === '✕' ? <span className="no-mark">—</span> : a}</td>
-                    <td className="highlight">{b === '✓' ? <span className="yes-mark">✓</span> : b === '✕' ? <span className="no-mark">—</span> : b}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <h2 className="section-title">The Curriculum Dossier</h2>
+          <p className="section-subtitle">A side-by-side breakdown of what's inside each track.</p>
+
+          <div className={`dossier-book ${isFlipping ? 'flipping' : ''}`}>
+            {/* Top Tabs (Decorative) */}
+            <div className="dossier-top-tabs">
+              <div
+                className={`dossier-top-tab ${dossierTab === 'overview' ? 'active' : ''}`}
+                onClick={() => handleTabChange('overview')}
+              >
+                Overview
+              </div>
+              <div
+                className={`dossier-top-tab ${dossierTab === 'requirements' ? 'active' : ''}`}
+                onClick={() => handleTabChange('requirements')}
+              >
+                Requirements
+              </div>
+            </div>
+
+            {/* Center Spine */}
+            <div className="dossier-spine"></div>
+
+            {/* Base Left Page */}
+            {renderLeftPage(isFlipping && flipDirection === 'ltr' ? nextTab : dossierTab)}
+
+            {/* Base Right Page */}
+            {renderRightPage(isFlipping && flipDirection === 'rtl' ? nextTab : dossierTab)}
+
+            {/* The 3D Flipping Page */}
+            {isFlipping && (
+              <div className={`page-turner ${flipDirection}`}>
+                <div className="flip-front">
+                  {flipDirection === 'rtl' ? renderRightPage(dossierTab) : renderLeftPage(dossierTab)}
+                </div>
+                <div className="flip-back">
+                  {flipDirection === 'rtl' ? renderLeftPage(nextTab) : renderRightPage(nextTab)}
+                </div>
+              </div>
+            )}
+
+            {/* Side Tabs */}
+            <div className="dossier-tabs">
+              <div className={`dossier-tab ${dossierTab === 'overview' ? 'active' : ''}`} onClick={() => handleTabChange('overview')}>Features</div>
+              <div className={`dossier-tab ${dossierTab === 'requirements' ? 'active' : ''}`} onClick={() => handleTabChange('requirements')}>Reqs</div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
       <footer className="footer">
-        <div className="wrap footer-inner">
-          <div className="footer-brand">
-            <h2>Lawctopus Law School</h2>
-            <p>Empowering the next generation of legal professionals through practical, skill-based education.</p>
+        <div className="wrap">
+          <div className="footer-grid">
+
+            <div className="footer-brand-col">
+              <div className="topbar-logo" style={{ marginBottom: '20px' }}>
+                <span className="topbar-logo-icon">L</span>
+                <span className="topbar-logo-text">awctopus</span>
+              </div>
+              <p className="footer-mission">
+                Building AI-ready legal careers. Premium education for modern advocates, law students, and legal professionals.
+              </p>
+              <div className="footer-socials">
+                <a href="#" className="social-icon">IN</a>
+                <a href="#" className="social-icon">TW</a>
+                <a href="#" className="social-icon">IG</a>
+              </div>
+            </div>
+
+            <div className="footer-links-col">
+              <h4>Curriculum</h4>
+              <a href="#">Contract Drafting</a>
+              <a href="#">Negotiation Masterclass</a>
+              <a href="#">Legal Tech & AI</a>
+              <a href="#">Freelancing Track</a>
+            </div>
+
+            <div className="footer-links-col">
+              <h4>Company</h4>
+              <a href="#">About Us</a>
+              <a href="#">Our Faculty</a>
+              <a href="#">Alumni Success</a>
+              <a href="#">Careers</a>
+            </div>
+
+            <div className="footer-links-col">
+              <h4>Support</h4>
+              <a href="#">Contact Us</a>
+              <a href="#">FAQ</a>
+              <a href="#">Privacy Policy</a>
+              <a href="#">Terms of Service</a>
+            </div>
+
           </div>
-          <div className="footer-links">
-            <a href="#">Terms & Conditions</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Refund Policy</a>
-            <a href="#">Contact Us</a>
+
+          <div className="footer-bottom">
+
+            <div className="footer-bottom-links">
+              <a href="#">Cookie Policy</a>
+              <a href="#">Refund Policy</a>
+            </div>
           </div>
         </div>
       </footer>
