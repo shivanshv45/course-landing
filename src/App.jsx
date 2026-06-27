@@ -177,14 +177,14 @@ function App() {
         
         <div className="mc-card">
           <div className="mc-image">
-            <img src="https://images.unsplash.com/photo-1555374018-1c4fa484b077?auto=format&fit=crop&w=1200&q=80" alt="Featured Instructor" />
+            <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=1200&q=80" alt="Featured Instructor" />
           </div>
           <div className="mc-content-overlay">
             <div className="mc-content-right">
-              <div className="mc-badge">New</div>
-              <h3 className="mc-serif-title">The Science<br/>of Connection</h3>
+              <div className="mc-badge">New Class</div>
+              <h3 className="mc-serif-title">Mastering<br/>Commercial Contracts</h3>
               <div className="mc-divider"></div>
-              <p className="mc-subtitle">Rewire Relationships to Last With Contract Theory</p>
+              <p className="mc-subtitle">Learn high-stakes drafting and negotiation from top industry experts.</p>
               <a href="#curriculum" className="mc-btn">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
                 Watch Trailer
