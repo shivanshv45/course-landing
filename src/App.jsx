@@ -5,11 +5,11 @@ const ENROLL_URL = 'https://www.lawctopuslawschool.com/courses/cdn6-months/'
 
 const months = [
   { n: '01', title: 'Essential Clauses & Fundamentals', rec: 25, live: 4, topics: ['Pre-contractual instruments & skeleton', 'Definition, Recitals, Identification clauses', 'Operative: Indemnity, Confidentiality, IP, Termination', 'Boilerplate: Force Majeure, Severability, Waiver'], img: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80' },
-  { n: '02', title: 'Execution & Basic Negotiation', rec: 18, live: 4, topics: ['Stamp Duty, Registration, Witnesses, Signatures', 'Employment Agreements, Software Licensing, NDAs', 'Core negotiation concepts & techniques', 'Contract Lab & Negotiation Table Exercise'], img: 'https://images.unsplash.com/photo-1516937941344-00b4e0337589?auto=format&fit=crop&w=800&q=80' },
+  { n: '02', title: 'Execution & Basic Negotiation', rec: 18, live: 4, topics: ['Stamp Duty, Registration, Witnesses, Signatures', 'Employment Agreements, Software Licensing, NDAs', 'Core negotiation concepts & techniques', 'Contract Lab & Negotiation Table Exercise'], img: 'https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?auto=format&fit=crop&w=800&q=80' },
   { n: '03', title: 'International & Advanced Negotiation', rec: 15, live: 8, topics: ['International commercial contracts', 'Loan, Employment, and NDAs', 'Mock negotiation of Service Level Agreements', 'Negotiation Skills & Freelancing Session 1'], img: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&q=80' },
   { n: '04', title: 'IP, Tech & Website Terms', rec: 13, live: 8, topics: ['Trademark, Patent & Copyright Licensing', 'SaaS & Joint Venture IP Agreements', 'Terms of Use, Privacy Policy, Refund Policy', 'Freelancing Session 2'], img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80' },
   { n: '05', title: 'Real Estate Agreements', rec: 4, live: 6, topics: ['Sale Deeds & Leave and License Agreements', 'Power of Attorney & Franchisee Agreements', 'Networking Skills & Freelancing Session 3'], img: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80' },
-  { n: '06', title: 'Business & Commercial', rec: 8, live: 6, topics: ['Sports Sponsorship & Shareholders Agreements', 'Share Purchase & Subscription Agreements', 'Partnership & Joint Venture Agreements'], img: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80' },
+  { n: '06', title: 'Business & Commercial', rec: 8, live: 6, topics: ['Sports Sponsorship & Shareholders Agreements', 'Share Purchase & Subscription Agreements', 'Partnership & Joint Venture Agreements'], img: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80' },
 ]
 
 const faculty = [
@@ -158,7 +158,7 @@ function App() {
         <div className="wrap">
           <div className="breakout-card">
             <div className="breakout-image">
-              <img src="https://images.unsplash.com/photo-1505664177941-a0f1db6e1189?auto=format&fit=crop&w=800&q=80" alt="Legal professional organizing documents" />
+              <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=800&q=80" alt="Legal professional drafting and signing a document" />
             </div>
             <div className="breakout-content">
               <div className="brand-header">Lawctopus <span>at Work</span></div>
