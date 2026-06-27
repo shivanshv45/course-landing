@@ -56,7 +56,7 @@ function App() {
   const [selectedGoals, setSelectedGoals] = useState([]);
 
   const toggleGoal = (goalIndex) => {
-    setSelectedGoals(prev => 
+    setSelectedGoals(prev =>
       prev.includes(goalIndex)
         ? prev.filter(g => g !== goalIndex)
         : [...prev, goalIndex]
@@ -284,15 +284,15 @@ function App() {
               <div className="mc-divider"></div>
               <p className="mc-subtitle">Learn high-stakes drafting and negotiation from top industry experts.</p>
               <div className="hero-actions">
-              <a href={ENROLL_URL} target="_blank" rel="noopener noreferrer" className="btn-solid-red">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
-                Watch Course
-              </a>
-              <a href="https://www.youtube.com/watch?v=CfiCtSm0Km0&pp=ygUobWFzdGVyaW5nIGNvbW1lcmljYWwgY29udHJhY3RzIGxhd2N0b3B1c9IHCQlBCwGHKiGM7w%3D%3D" target="_blank" rel="noopener noreferrer" className="btn-outline-grey">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
-                Watch Trailer
-              </a>
-            </div>
+                <a href={ENROLL_URL} target="_blank" rel="noopener noreferrer" className="btn-solid-red">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+                  Watch Course
+                </a>
+                <a href="https://www.youtube.com/watch?v=CfiCtSm0Km0&pp=ygUobWFzdGVyaW5nIGNvbW1lcmljYWwgY29udHJhY3RzIGxhd2N0b3B1c9IHCQlBCwGHKiGM7w%3D%3D" target="_blank" rel="noopener noreferrer" className="btn-outline-grey">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z" /></svg>
+                  Watch Trailer
+                </a>
+              </div>
             </div>
           </div>
         </div>
@@ -300,20 +300,18 @@ function App() {
 
       {/* MasterClass Breakout Card (Why Join) */}
       <section id="why-join" className="section breakout-section">
-        <div className="wrap">
-          <div className="breakout-card">
-            <div className="breakout-image">
-              <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=800&q=80" alt="Legal professional drafting and signing a document" />
-            </div>
-            <div className="breakout-content">
-              <div className="brand-header">Lawctopus <span>at Work</span></div>
-              <h2 className="breakout-title">MASTER YOUR DRAFTING</h2>
-              <p className="breakout-desc">See why hundreds of law students and professionals rely on Lawctopus for highly practical, hands-on training and career development.</p>
+        <div className="breakout-card">
+          <div className="breakout-image">
+            <img src="https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=800&q=80" alt="Legal professional drafting and signing a document" />
+          </div>
+          <div className="breakout-content">
+            <div className="brand-header">Lawctopus <span>at Work</span></div>
+            <h2 className="breakout-title">MASTER YOUR DRAFTING</h2>
+            <p className="breakout-desc">See why hundreds of law students and professionals rely on Lawctopus for highly practical, hands-on training and career development.</p>
 
-              <div className="breakout-actions">
-                <a href={ENROLL_URL} className="btn-solid-red">Enroll Now</a>
-                <a href="#curriculum" className="btn-text-link">Learn More &rarr;</a>
-              </div>
+            <div className="breakout-actions">
+              <a href={ENROLL_URL} className="btn-solid-red">Enroll Now</a>
+              <a href="#curriculum" className="btn-text-link">Learn More &rarr;</a>
             </div>
           </div>
         </div>
@@ -396,13 +394,13 @@ function App() {
                   "Understand International Contracts",
                   "Get 1-on-1 feedback on my drafts"
                 ].map((goal, idx) => (
-                  <div 
-                    key={idx} 
+                  <div
+                    key={idx}
                     className={`mc-check-item ${selectedGoals.includes(idx) ? 'selected' : ''}`}
                     onClick={() => toggleGoal(idx)}
                     style={{ cursor: 'pointer' }}
                   >
-                    <div className="mc-check-box"></div> 
+                    <div className="mc-check-box"></div>
                     {goal}
                   </div>
                 ))}

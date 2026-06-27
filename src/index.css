@@ -540,8 +540,8 @@ button,
 }
 
 .mc-card {
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: 950px;
+  margin: 0 auto 0 2vw;
   position: relative;
   border-radius: 8px;
   overflow: hidden;
@@ -651,8 +651,8 @@ button,
   display: flex;
   align-items: center;
   position: relative;
-  max-width: 1000px;
-  margin: 0 auto;
+  max-width: 950px;
+  margin: 0 4vw 0 auto;
   min-height: 400px;
 }
 
