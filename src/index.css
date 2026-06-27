@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap');
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; background: #000; overflow-x: hidden; }
+html { scroll-behavior: smooth; background: #000; }
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -9,14 +9,12 @@ body {
   background: #000000;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
   width: 100%;
   /* Law Pen Cursor */
   cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23d61818' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 19l7-7 3 3-7 7-3-3z'/%3E%3Cpath d='M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z'/%3E%3Cpath d='M2 2l7.586 7.586'/%3E%3Ccircle cx='11' cy='11' r='2'/%3E%3C/svg%3E") 0 24, auto;
 }
 
 #root, .app-wrapper {
-  overflow-x: hidden;
   width: 100%;
   max-width: 100%;
   position: relative;
@@ -318,31 +316,35 @@ a, button, .btn-cta, .btn-outline, .btn-enroll, .btn-cta-dark { cursor: pointer 
 .text-card h4 { font-size: 1.2rem; color: #fff; margin-bottom: 16px; }
 .text-card p { color: #999; font-size: 0.95rem; line-height: 1.6; }
 
-/* ============ HORIZONTAL SNAP CURRICULUM ============ */
-.slider-section { padding: 120px 0; background: #080808; border-top: 1px solid #1a1a1a; border-bottom: 1px solid #1a1a1a; }
-.text-center { text-align: center; }
-.massive-heading {
-  font-family: 'Inter', sans-serif; font-size: 4.5rem; font-weight: 900; color: #fff;
-  text-transform: uppercase; letter-spacing: -2px; line-height: 1; margin-bottom: 16px;
-  text-shadow: 2px 2px 0px rgba(255,255,255,0.05);
+/* ============ STICKY HORIZONTAL SCROLL CURRICULUM ============ */
+.sticky-scroll-container {
+  height: 400vh;
+  position: relative;
+  background: #080808;
+  border-top: 1px solid #1a1a1a;
+  border-bottom: 1px solid #1a1a1a;
 }
-.massive-subheading { font-size: 1.2rem; color: #aaa; margin-bottom: 60px; }
-
-.carousel-nav { display: flex; gap: 16px; justify-content: center; margin-bottom: 40px; }
-.nav-btn {
-  background: transparent; border: 1px solid #444; color: #fff; width: 48px; height: 48px;
-  border-radius: 50%; display: flex; align-items: center; justify-content: center;
-  cursor: pointer; transition: all 0.2s;
+.sticky-view {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-.nav-btn:hover { border-color: #fff; background: rgba(255,255,255,0.1); }
+.sticky-header { padding-bottom: 40px; }
 
-.curriculum-carousel {
-  display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth;
-  scrollbar-width: none; padding: 0 5vw 40px; gap: 4vw;
+.curriculum-horizontal-track {
+  display: flex;
+  width: max-content;
+  padding: 0 5vw;
+  gap: 4vw;
+  will-change: transform;
 }
-.curriculum-carousel::-webkit-scrollbar { display: none; }
 
-.curriculum-slide { scroll-snap-align: center; flex: 0 0 90vw; max-width: 1100px; }
+.curriculum-slide { flex: 0 0 90vw; max-width: 1100px; }
 
 .slide-inner { display: flex; background: #111; border: 1px solid #222; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.6); }
 

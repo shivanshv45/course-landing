@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import './index.css'
 
 const ENROLL_URL = 'https://www.lawctopuslawschool.com/courses/cdn6-months/'
@@ -43,17 +43,44 @@ const compRows = [
 function App() {
   const carouselRef = useRef(null)
 
-  const scrollNext = () => {
-    if (carouselRef.current) {
-      // scroll by slightly less than the viewport to snap reliably
-      carouselRef.current.scrollBy({ left: window.innerWidth > 900 ? 1000 : window.innerWidth * 0.8, behavior: 'smooth' })
-    }
-  }
-  const scrollPrev = () => {
-    if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: window.innerWidth > 900 ? -1000 : -window.innerWidth * 0.8, behavior: 'smooth' })
-    }
-  }
+  const sectionRef = useRef(null);
+  const trackRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!sectionRef.current || !trackRef.current) return;
+      
+      const section = sectionRef.current;
+      const track = trackRef.current;
+      
+      const rect = section.getBoundingClientRect();
+      const sectionTop = window.scrollY + rect.top;
+      const sectionHeight = section.offsetHeight;
+      const windowHeight = window.innerHeight;
+      
+      // If we haven't reached the section, track is at 0
+      if (window.scrollY < sectionTop) {
+        track.style.transform = `translateX(0px)`;
+        return;
+      }
+      
+      // Calculate how far down the 400vh section we have scrolled
+      let progress = (window.scrollY - sectionTop) / (sectionHeight - windowHeight);
+      progress = Math.max(0, Math.min(1, progress));
+      
+      const maxScroll = track.scrollWidth - window.innerWidth;
+      track.style.transform = `translateX(-${progress * maxScroll}px)`;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleScroll);
+    handleScroll(); // init on mount
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleScroll);
+    };
+  }, []);
 
   return (
     <div className="app-wrapper">
@@ -188,23 +215,15 @@ function App() {
         </div>
       </section>
 
-      {/* Curriculum - Horizontal Snap Slider */}
-      <section id="curriculum" className="slider-section">
-        <div className="wrap text-center" style={{position: 'relative'}}>
-          <h2 className="massive-heading">COURSE WORK</h2>
-          <p className="massive-subheading">Swipe through your 6-month journey to mastery.</p>
-          
-          <div className="carousel-nav">
-            <button onClick={scrollPrev} className="nav-btn" aria-label="Previous Module">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-            </button>
-            <button onClick={scrollNext} className="nav-btn" aria-label="Next Module">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-            </button>
+      {/* Curriculum - Sticky Horizontal Scroll */}
+      <section id="curriculum" className="sticky-scroll-container" ref={sectionRef}>
+        <div className="sticky-view">
+          <div className="wrap text-center sticky-header">
+            <h2 className="massive-heading">COURSE WORK</h2>
+            <p className="massive-subheading">Scroll down to explore your 6-month journey to mastery.</p>
           </div>
-        </div>
 
-        <div className="curriculum-carousel" ref={carouselRef}>
+          <div className="curriculum-horizontal-track" ref={trackRef}>
           {months.map((m, i) => (
             <div className="curriculum-slide" key={i}>
               <div className="slide-inner">
@@ -249,6 +268,7 @@ function App() {
               </div>
             </div>
           ))}
+          </div>
         </div>
       </section>
 
