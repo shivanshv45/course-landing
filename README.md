@@ -1,16 +1,29 @@
-# React + Vite
+# Lawctopus Contract Drafting Landing Page
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A premium, modern landing page designed for the Lawctopus "Mastering Contract Drafting and Freelancing" course. This project focuses on delivering a sleek, high-conversion user experience with a strong aesthetic appeal.
 
-Currently, two official plugins are available:
+## About The Project
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+The goal was to build a visually striking and professional landing page that truly reflects the quality of the Lawctopus course. We moved away from standard, generic templates and opted for a highly customized, dark-themed design with subtle red accents, smooth animations, and interactive elements that keep users engaged.
 
-## React Compiler
+## Best Sections
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+*   **Interactive Hero Section**: Instead of a boring static header, the top section features a dynamic checklist where users can select their goals ("Draft contracts confidently", "Start a freelance career", etc.). Once they make a selection, a prominent call to action appears, guiding them straight to enrollment.
+*   **Staggered Layout (Zig-Zag Design)**: The "Mastering Commercial Contracts" and "Lawctopus at Work" sections are intentionally offset (one pushed left, one pushed right). This creates a highly engaging reading flow rather than a standard vertical stack.
+*   **Curriculum Dossier**: A unique interactive book-style component where users can flip between "Features" and "Requirements", making the course details feel tangible and premium.
+*   **Horizontal Sticky Scroll**: The course timeline uses a horizontal scrolling mechanism while the main section stays pinned. It breaks up the vertical scrolling monotony and displays the month-by-month breakdown beautifully.
 
-## Expanding the Oxlint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+*   **React (Vite)**: For fast component rendering and development.
+*   **Vanilla CSS**: Used for complete control over styling, custom animations, and layout precision without relying on heavy frameworks.
+*   **Lucide React (or standard SVGs)**: For crisp, scalable iconography.
+
+## Live Demo
+
+Check out the live version here: [https://lawctopuss.vercel.app/](https://lawctopuss.vercel.app/)
+
+## Author
+
+**Shivansh Verma**
+Email: shivanshverma1006@gmail.com
