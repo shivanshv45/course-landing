@@ -1,15 +1,15 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import './index.css'
 
 const ENROLL_URL = 'https://www.lawctopuslawschool.com/courses/cdn6-months/'
 
 const months = [
   { n: '01', title: 'Essential Clauses & Fundamentals', rec: 25, live: 4, topics: ['Pre-contractual instruments & skeleton', 'Definition, Recitals, Identification clauses', 'Operative: Indemnity, Confidentiality, IP, Termination', 'Boilerplate: Force Majeure, Severability, Waiver'], img: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80' },
-  { n: '02', title: 'Execution & Basic Negotiation', rec: 18, live: 4, topics: ['Stamp Duty, Registration, Witnesses, Signatures', 'Employment Agreements, Software Licensing, NDAs', 'Core negotiation concepts & techniques', 'Contract Lab & Negotiation Table Exercise'], img: 'https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?auto=format&fit=crop&w=800&q=80' },
+  { n: '02', title: 'Execution & Basic Negotiation', rec: 18, live: 4, topics: ['Stamp Duty, Registration, Witnesses, Signatures', 'Employment Agreements, Software Licensing, NDAs', 'Core negotiation concepts & techniques', 'Contract Lab & Negotiation Table Exercise'], img: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&w=800&q=80' },
   { n: '03', title: 'International & Advanced Negotiation', rec: 15, live: 8, topics: ['International commercial contracts', 'Loan, Employment, and NDAs', 'Mock negotiation of Service Level Agreements', 'Negotiation Skills & Freelancing Session 1'], img: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=800&q=80' },
   { n: '04', title: 'IP, Tech & Website Terms', rec: 13, live: 8, topics: ['Trademark, Patent & Copyright Licensing', 'SaaS & Joint Venture IP Agreements', 'Terms of Use, Privacy Policy, Refund Policy', 'Freelancing Session 2'], img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80' },
   { n: '05', title: 'Real Estate Agreements', rec: 4, live: 6, topics: ['Sale Deeds & Leave and License Agreements', 'Power of Attorney & Franchisee Agreements', 'Networking Skills & Freelancing Session 3'], img: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80' },
-  { n: '06', title: 'Business & Commercial', rec: 8, live: 6, topics: ['Sports Sponsorship & Shareholders Agreements', 'Share Purchase & Subscription Agreements', 'Partnership & Joint Venture Agreements'], img: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=800&q=80' },
+  { n: '06', title: 'Business & Commercial', rec: 8, live: 6, topics: ['Sports Sponsorship & Shareholders Agreements', 'Share Purchase & Subscription Agreements', 'Partnership & Joint Venture Agreements'], img: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80' },
 ]
 
 const faculty = [
@@ -41,6 +41,20 @@ const compRows = [
 ]
 
 function App() {
+  const carouselRef = useRef(null)
+
+  const scrollNext = () => {
+    if (carouselRef.current) {
+      // scroll by slightly less than the viewport to snap reliably
+      carouselRef.current.scrollBy({ left: window.innerWidth > 900 ? 1000 : window.innerWidth * 0.8, behavior: 'smooth' })
+    }
+  }
+  const scrollPrev = () => {
+    if (carouselRef.current) {
+      carouselRef.current.scrollBy({ left: window.innerWidth > 900 ? -1000 : -window.innerWidth * 0.8, behavior: 'smooth' })
+    }
+  }
+
   return (
     <div className="app-wrapper">
       {/* Top Banner */}
@@ -174,50 +188,65 @@ function App() {
         </div>
       </section>
 
-      {/* Curriculum - ZigZag Features */}
-      <section id="curriculum" className="zigzag-section">
-        <div className="wrap">
+      {/* Curriculum - Horizontal Snap Slider */}
+      <section id="curriculum" className="slider-section">
+        <div className="wrap text-center" style={{position: 'relative'}}>
+          <h2 className="massive-heading">COURSE WORK</h2>
+          <p className="massive-subheading">Swipe through your 6-month journey to mastery.</p>
+          
+          <div className="carousel-nav">
+            <button onClick={scrollPrev} className="nav-btn" aria-label="Previous Module">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            </button>
+            <button onClick={scrollNext} className="nav-btn" aria-label="Next Module">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </button>
+          </div>
+        </div>
+
+        <div className="curriculum-carousel" ref={carouselRef}>
           {months.map((m, i) => (
-            <div className={`zigzag-row ${i % 2 !== 0 ? 'reverse' : ''}`} key={i}>
-              
-              <div className="zigzag-image">
-                <img src={m.img} alt={m.title} />
-                {i === months.length - 1 && (
-                  <div className="cert-badge">
-                    <svg viewBox="0 0 100 100" width="140" height="140"><circle cx="50" cy="50" r="45" fill="none" stroke="#f39c12" strokeWidth="2" strokeDasharray="6 4" /><path id="curve" d="M 15 50 a 35 35 0 1 1 70 0 a 35 35 0 1 1 -70 0" fill="none" /><text fontSize="9.5" fill="#f39c12" letterSpacing="2"><textPath href="#curve" startOffset="0%">★ CERTIFICATE OF COMPLETION ★</textPath></text></svg>
-                  </div>
-                )}
-              </div>
-              
-              <div className="zigzag-content">
-                <div className="zz-label">Month {m.n} Course Module</div>
-                <h2 className="zz-title">{m.title}</h2>
-                <div className="zz-list">
-                  {m.topics.map((topic, j) => (
-                    <div className="zz-list-item" key={j}>
-                      <div className="zz-list-icon">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            <div className="curriculum-slide" key={i}>
+              <div className="slide-inner">
+                
+                <div className="slide-image">
+                  <img src={m.img} alt={m.title} />
+                  {i === months.length - 1 && (
+                    <div className="cert-badge">
+                      <svg viewBox="0 0 100 100" width="120" height="120"><circle cx="50" cy="50" r="45" fill="none" stroke="#f39c12" strokeWidth="2" strokeDasharray="6 4" /><path id="curve" d="M 15 50 a 35 35 0 1 1 70 0 a 35 35 0 1 1 -70 0" fill="none" /><text fontSize="9.5" fill="#f39c12" letterSpacing="2"><textPath href="#curve" startOffset="0%">★ CERTIFICATE OF COMPLETION ★</textPath></text></svg>
+                    </div>
+                  )}
+                </div>
+                
+                <div className="slide-content">
+                  <div className="slide-label">Module {m.n}</div>
+                  <h3 className="slide-title">{m.title}</h3>
+                  <div className="slide-list">
+                    {m.topics.map((topic, j) => (
+                      <div className="slide-list-item" key={j}>
+                        <div className="slide-list-icon">
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                        </div>
+                        <div className="slide-list-text">{topic}</div>
                       </div>
-                      <div className="zz-list-text">{topic}</div>
+                    ))}
+                    
+                    <div className="slide-list-item" style={{marginTop: '16px'}}>
+                      <div className="slide-list-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                      </div>
+                      <div className="slide-list-text"><strong>{m.live} hours</strong> live instruction</div>
                     </div>
-                  ))}
-                  
-                  {/* Additional dummy bullets mimicking the screenshot for extra detail */}
-                  <div className="zz-list-item">
-                    <div className="zz-list-icon">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                    <div className="slide-list-item">
+                      <div className="slide-list-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                      </div>
+                      <div className="slide-list-text"><strong>{m.rec} hours</strong> on-demand</div>
                     </div>
-                    <div className="zz-list-text"><strong>Live Classes:</strong> {m.live} hours of expert-led live instruction.</div>
-                  </div>
-                  <div className="zz-list-item">
-                    <div className="zz-list-icon">
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                    </div>
-                    <div className="zz-list-text"><strong>Recorded Material:</strong> {m.rec} hours of on-demand content.</div>
                   </div>
                 </div>
+                
               </div>
-              
             </div>
           ))}
         </div>
