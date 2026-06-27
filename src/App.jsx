@@ -337,28 +337,61 @@ function App() {
         </div>
       </section>
 
-      {/* AI Integration - Darker Variant */}
-      <section id="ai" className="section section-gradient">
-        <div className="wrap">
-          <h2 className="section-title">Building AI-Ready Legal Careers</h2>
-          <p className="section-subtitle">AI is no longer optional for lawyers — it is fast becoming a core professional skill.</p>
-          
-          <div className="text-cards-grid">
-            <div className="text-card">
-              <h4>1. LIVE AI Sessions with Indian Kanoon</h4>
-              <p>Regular LIVE sessions (60-90 min) demonstrating practical AI tools used in Indian legal work — research, drafting, and analysis.</p>
+      {/* AI Integration - Fons Mans Inspired Split Layout */}
+      <section id="ai" className="ai-split-section">
+        <div className="ai-split-left">
+          {/* A striking, deep red cinematic visual representing AI & Law */}
+          <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?auto=format&fit=crop&w=1200&q=80" alt="AI & Law" className="ai-abstract-img" />
+          <div className="ai-left-content">
+            <h2 className="ai-massive-title">AI IN LAW</h2>
+            <p className="ai-left-desc">
+              AI is no longer optional.<br/>
+              It is a core professional skill.
+            </p>
+          </div>
+        </div>
+
+        <div className="ai-split-right">
+          <div className="ai-right-inner">
+            <div className="ai-header-text">
+              <div className="ai-col-header">The Curriculum</div>
+              <p className="ai-intro-text">Master practical AI tools for Indian legal work, research, and high-stakes contract analysis.</p>
             </div>
-            <div className="text-card">
-              <h4>2. 4-Hour Recorded Workshop</h4>
-              <p>Extensive workshop covering AI for Legal Research, Argumentation, Contract Drafting, and Technology & Ethics Behind AI in Law.</p>
-            </div>
-            <div className="text-card">
-              <h4>3. Indian Kanoon's Prism Access</h4>
-              <p>Every learner receives 1-month complimentary access to Indian Kanoon's AI tool for faster legal research and document drafting.</p>
-            </div>
-            <div className="text-card">
-              <h4>4. Extensive AI Resources</h4>
-              <p>Ongoing AI insights from mentors during live classes and access to a 31-page eBook on AI Prompts for Lawyers.</p>
+
+            <div className="ai-lists-grid">
+              {/* Column 1 */}
+              <div className="ai-list-col">
+                <h4 className="ai-list-title">Live Sessions</h4>
+                <ul className="ai-clean-list">
+                  <li><span>Indian Kanoon AI</span><span className="ai-meta">Live</span></li>
+                  <li><span>Practical Tools</span><span className="ai-meta">60m</span></li>
+                  <li><span>Legal Research</span><span className="ai-meta">Core</span></li>
+                  <li><span>Drafting & Analysis</span><span className="ai-meta">Core</span></li>
+                </ul>
+
+                <h4 className="ai-list-title" style={{marginTop: '40px'}}>Included Tools</h4>
+                <ul className="ai-clean-list">
+                  <li><span>IK Prism Access</span><span className="ai-meta">1 Month</span></li>
+                  <li><span>AI Prompts eBook</span><span className="ai-meta">31 pgs</span></li>
+                </ul>
+              </div>
+
+              {/* Column 2 */}
+              <div className="ai-list-col">
+                <h4 className="ai-list-title">4-Hour Workshop</h4>
+                <ul className="ai-clean-list">
+                  <li><span>Legal Research</span><span className="ai-meta">Rec</span></li>
+                  <li><span>Argumentation</span><span className="ai-meta">Rec</span></li>
+                  <li><span>Contract Drafting</span><span className="ai-meta">Rec</span></li>
+                  <li><span>Technology & Ethics</span><span className="ai-meta">Rec</span></li>
+                </ul>
+                
+                <h4 className="ai-list-title" style={{marginTop: '40px'}}>Support</h4>
+                <ul className="ai-clean-list">
+                  <li><span>Mentor Insights</span><span className="ai-meta">Ongoing</span></li>
+                  <li><span>Q&A Forums</span><span className="ai-meta">24/7</span></li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -390,10 +423,6 @@ function App() {
 
             {/* Center Card: Premium */}
             <div className="price-card featured">
-              <div className="floating-badge badge-top-left">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                Limited-time offer
-              </div>
               <div className="floating-badge badge-bottom-right">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                 3,000+ enrolled

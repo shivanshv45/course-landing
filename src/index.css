@@ -313,12 +313,27 @@ a, button, .btn-cta, .btn-outline, .btn-enroll, .btn-cta-dark {
 .btn-text-link { color: #fff; font-weight: 600; font-size: 0.95rem; display: flex; align-items: center; transition: opacity 0.2s; }
 .btn-text-link:hover { opacity: 0.7; }
 
-/* Cards Grid */
-.text-cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px; }
-.text-card { background: #111; border: 1px solid #222; padding: 32px; border-radius: 8px; transition: transform 0.3s, border-color 0.3s; }
-.text-card:hover { transform: translateY(-5px); border-color: #d61818; }
-.text-card h4 { font-size: 1.2rem; color: #fff; margin-bottom: 16px; }
-.text-card p { color: #999; font-size: 0.95rem; line-height: 1.6; }
+/* ============ AI SPLIT SECTION ============ */
+.ai-split-section { display: flex; min-height: 100vh; background: #000; border-top: 1px solid #1a1a1a; }
+.ai-split-left { width: 45%; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; padding: 40px; }
+.ai-abstract-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: sepia(1) hue-rotate(-50deg) saturate(5) brightness(0.6) contrast(1.2); z-index: 0; }
+.ai-left-content { position: relative; z-index: 1; margin-top: auto; }
+.ai-massive-title { font-family: 'Inter', sans-serif; font-size: 3.5rem; font-weight: 900; color: #fff; letter-spacing: -2px; margin-bottom: 16px; }
+.ai-left-desc { color: rgba(255,255,255,0.8); font-size: 1.1rem; line-height: 1.5; font-weight: 500; }
+
+.ai-split-right { width: 55%; padding: 80px; display: flex; flex-direction: column; justify-content: center; }
+.ai-right-inner { max-width: 600px; width: 100%; }
+.ai-header-text { margin-bottom: 60px; display: flex; justify-content: space-between; gap: 40px; align-items: flex-start; }
+.ai-col-header { color: #fff; font-size: 0.95rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; flex-shrink: 0; }
+.ai-intro-text { color: #888; font-size: 1rem; line-height: 1.6; font-weight: 400; margin: 0; }
+
+.ai-lists-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+.ai-list-col { display: flex; flex-direction: column; }
+.ai-list-title { color: #fff; font-size: 0.95rem; font-weight: 600; margin-bottom: 24px; }
+.ai-clean-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.ai-clean-list li { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 8px; color: #aaa; font-size: 0.9rem; transition: color 0.2s; cursor: pointer; }
+.ai-clean-list li:hover { color: #fff; }
+.ai-meta { color: #d61818; font-size: 0.75rem; font-family: monospace; letter-spacing: 0.5px; opacity: 0.8; }
 
 /* ============ STICKY HORIZONTAL SCROLL CURRICULUM ============ */
 .sticky-scroll-container {
@@ -438,10 +453,8 @@ a, button, .btn-cta, .btn-outline, .btn-enroll, .btn-cta-dark {
 .price-card.featured { border-color: #d61818; background: linear-gradient(180deg, #1a0505 0%, #111 100%); transform: scale(1.15); z-index: 10; box-shadow: 0 40px 80px rgba(0,0,0,0.9), 0 0 50px rgba(214, 24, 24, 0.15); padding: 56px 40px; text-align: center; }
 
 /* Floating Badges */
-.floating-badge { position: absolute; background: #fff; color: #000; font-size: 0.85rem; font-weight: 700; padding: 12px 20px; border-radius: 30px; display: flex; align-items: center; gap: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 20; white-space: nowrap; }
-.badge-top-left { top: -20px; left: -40px; animation: float 6s ease-in-out infinite; }
-.badge-bottom-right { bottom: -20px; right: -40px; animation: float 6s ease-in-out infinite 3s; }
-@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.floating-badge { position: absolute; background: #fff; color: #000; font-size: 0.85rem; font-weight: 700; padding: 12px 20px; border-radius: 6px; display: flex; align-items: center; gap: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 20; white-space: nowrap; }
+.badge-bottom-right { bottom: -20px; right: -40px; }
 
 .price-card h3 { font-size: 1.5rem; color: #fff; margin-bottom: 8px; }
 .price-card .duration { color: #aaa; font-size: 0.9rem; margin-bottom: 24px; }
@@ -496,13 +509,17 @@ a, button, .btn-cta, .btn-outline, .btn-enroll, .btn-cta-dark {
 }
 
 @media (max-width: 1000px) {
+  .ai-split-section { flex-direction: column; }
+  .ai-split-left { width: 100%; height: 400px; padding: 40px 20px; }
+  .ai-split-right { width: 100%; padding: 60px 20px; }
+  .ai-header-text { flex-direction: column; gap: 16px; }
+  .ai-lists-grid { grid-template-columns: 1fr; gap: 40px; }
   .pricing-cards-stacked { flex-direction: column; gap: 40px; }
   .price-card.tier-left { transform: translateX(0) scale(1); opacity: 1; filter: blur(0); }
   .price-card.tier-left:hover { transform: translateX(0) scale(1); }
   .price-card.tier-right { transform: translateX(0) scale(1); opacity: 1; filter: blur(0); }
   .price-card.tier-right:hover { transform: translateX(0) scale(1); }
   .price-card.featured { transform: scale(1); }
-  .badge-top-left { left: -10px; }
   .badge-bottom-right { right: -10px; }
 }
 
