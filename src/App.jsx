@@ -368,44 +368,68 @@ function App() {
       <section id="pricing" className="section section-alt">
         <div className="wrap">
           <h2 className="section-title">Choose Your Path</h2>
-          <p className="section-subtitle">Lawctopus Law School offers two focused tracks for contract drafting.</p>
+          <p className="section-subtitle">Lawctopus Law School offers specialized tracks for contract drafting.</p>
           
-          <div className="pricing-cards">
-            {/* Basic Course */}
-            <div className="price-card">
-              <h3>2-Month Certificate</h3>
-              <div className="duration">Contract Drafting & Negotiation</div>
+          <div className="pricing-cards-stacked">
+            
+            {/* Left Card: Basic */}
+            <div className="price-card tier-left">
+              <h3>2-Month Basic</h3>
+              <div className="duration">Fundamentals</div>
               <div className="price-original" style={{ opacity: 0 }}>₹0</div>
               <div className="price-current">₹7,999</div>
               
               <ul className="feat-list">
                 <li>8 Live Classes</li>
-                <li>2 Compulsory Assignments</li>
-                <li>Fundamental negotiation module</li>
+                <li>2 Assignments</li>
                 <li>Money-back guarantee</li>
-                <li className="disabled">No freelancing training</li>
-                <li className="disabled">No networking sessions</li>
+                <li className="disabled">No freelancing</li>
               </ul>
               <a href="https://www.lawctopuslawschool.com/contract-drafting-negotiation/" className="btn-outline-full">Enroll Now</a>
             </div>
 
-            {/* Premium Course */}
+            {/* Center Card: Premium */}
             <div className="price-card featured">
-              <h3>6-Month Expert-Level</h3>
+              <div className="floating-badge badge-top-left">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                Limited-time offer
+              </div>
+              <div className="floating-badge badge-bottom-right">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                3,000+ enrolled
+              </div>
+
+              <div className="mc-badge" style={{margin: '0 auto 16px', display: 'inline-block'}}>Most Popular</div>
+              <h3>6-Month Expert</h3>
               <div className="duration">Mastering Drafting & Freelancing</div>
               <div className="price-original">₹60,000</div>
               <div className="price-current">₹24,999 <span>/ full</span></div>
               
               <ul className="feat-list">
                 <li>55 Live Classes</li>
-                <li>17 Assignments + Personal Feedback</li>
-                <li>Expert-level negotiation module</li>
-                <li>Money-back guarantee</li>
+                <li>17 Assignments + Feedback</li>
                 <li>Comprehensive freelancing training</li>
                 <li>Monthly networking sessions</li>
               </ul>
               <a href={ENROLL_URL} className="btn-cta-full">Register by June 30</a>
             </div>
+
+            {/* Right Card: Standard */}
+            <div className="price-card tier-right">
+              <h3>4-Month Standard</h3>
+              <div className="duration">Advanced Modules</div>
+              <div className="price-original">₹25,000</div>
+              <div className="price-current">₹15,999</div>
+              
+              <ul className="feat-list">
+                <li>24 Live Classes</li>
+                <li>8 Assignments</li>
+                <li>Money-back guarantee</li>
+                <li className="disabled">No networking</li>
+              </ul>
+              <a href="#" className="btn-outline-full">Enroll Now</a>
+            </div>
+
           </div>
         </div>
       </section>

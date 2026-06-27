@@ -425,10 +425,24 @@ a, button, .btn-cta, .btn-outline, .btn-enroll, .btn-cta-dark {
 }
 .faculty-card-mc:hover .fm-bio { opacity: 1; margin-top: 12px; }
 
-/* Pricing */
-.pricing-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 32px; max-width: 900px; margin: 0 auto; }
-.price-card { background: #111; border: 1px solid #222; border-radius: 12px; padding: 48px 40px; display: flex; flex-direction: column; position: relative; }
-.price-card.featured { border-color: #d61818; background: linear-gradient(180deg, #1a0505 0%, #111 100%); transform: scale(1.05); z-index: 2; box-shadow: 0 20px 50px rgba(214, 24, 24, 0.15); }
+/* Pricing Stacked Layout */
+.pricing-cards-stacked { display: flex; justify-content: center; align-items: center; max-width: 1000px; margin: 80px auto 40px; position: relative; }
+.price-card { background: #111; border: 1px solid #222; border-radius: 16px; padding: 48px 40px; display: flex; flex-direction: column; position: relative; width: 340px; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+
+.price-card.tier-left { transform: translateX(60px) scale(0.9); z-index: 1; opacity: 0.5; filter: blur(1px); }
+.price-card.tier-left:hover { transform: translateX(60px) scale(0.95); opacity: 0.9; filter: blur(0); z-index: 15; }
+
+.price-card.tier-right { transform: translateX(-60px) scale(0.9); z-index: 1; opacity: 0.5; filter: blur(1px); }
+.price-card.tier-right:hover { transform: translateX(-60px) scale(0.95); opacity: 0.9; filter: blur(0); z-index: 15; }
+
+.price-card.featured { border-color: #d61818; background: linear-gradient(180deg, #1a0505 0%, #111 100%); transform: scale(1.15); z-index: 10; box-shadow: 0 40px 80px rgba(0,0,0,0.9), 0 0 50px rgba(214, 24, 24, 0.15); padding: 56px 40px; text-align: center; }
+
+/* Floating Badges */
+.floating-badge { position: absolute; background: #fff; color: #000; font-size: 0.85rem; font-weight: 700; padding: 12px 20px; border-radius: 30px; display: flex; align-items: center; gap: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 20; white-space: nowrap; }
+.badge-top-left { top: -20px; left: -40px; animation: float 6s ease-in-out infinite; }
+.badge-bottom-right { bottom: -20px; right: -40px; animation: float 6s ease-in-out infinite 3s; }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
 .price-card h3 { font-size: 1.5rem; color: #fff; margin-bottom: 8px; }
 .price-card .duration { color: #aaa; font-size: 0.9rem; margin-bottom: 24px; }
 .price-original { color: #555; text-decoration: line-through; font-size: 1.2rem; margin-bottom: 4px; }
@@ -481,10 +495,18 @@ a, button, .btn-cta, .btn-outline, .btn-enroll, .btn-cta-dark {
   .breakout-actions { justify-content: center; }
 }
 
-@media (max-width: 768px) {
-  .hero-content { width: 100%; }
-  .hero-content h1 { font-size: 2.5rem; }
+@media (max-width: 1000px) {
+  .pricing-cards-stacked { flex-direction: column; gap: 40px; }
+  .price-card.tier-left { transform: translateX(0) scale(1); opacity: 1; filter: blur(0); }
+  .price-card.tier-left:hover { transform: translateX(0) scale(1); }
+  .price-card.tier-right { transform: translateX(0) scale(1); opacity: 1; filter: blur(0); }
+  .price-card.tier-right:hover { transform: translateX(0) scale(1); }
   .price-card.featured { transform: scale(1); }
+  .badge-top-left { left: -10px; }
+  .badge-bottom-right { right: -10px; }
+}
+
+@media (max-width: 768px) {
   .overlap-card { position: relative; bottom: 0; right: 0; margin-top: -40px; margin-left: 20px; margin-right: 20px; }
   .comparison-wrap { overflow-x: auto; }
 }
